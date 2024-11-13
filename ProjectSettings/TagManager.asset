@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Floor2Trigger
+  - Floor1Trigger
+  - DefaultTigger
+  - Brigde
+  - Ground
+  - GroundCheck
+  - Item
+  - AttackPosition
+  - Enemy
+  - HouseofGoblinRange
+  - AttackRange
+  - Gbattackhitbox
+  - Explosion
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Floor1
+  - Water
+  - UI
+  - Floor2
+  - Ground
+  - GroundCheck
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 415670305
+    locked: 0
+  - name: Wall
+    uniqueID: 2323807877
+    locked: 0
+  - name: Ground
+    uniqueID: 1439083853
+    locked: 0
+  - name: UpWall
+    uniqueID: 2249024101
+    locked: 0
+  - name: UpGround
+    uniqueID: 3261841607
+    locked: 0
+  - name: Midground
+    uniqueID: 3703873673
+    locked: 0
+  - name: Foreground
+    uniqueID: 1880096163
+    locked: 0
