@@ -1,4 +1,5 @@
-﻿using Unity.VisualScripting;
+﻿using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
@@ -14,55 +15,40 @@ public class Enemy : MonoBehaviour
     private bool isFacingRight = true;
     
     public Transform Player;
-    Rigidbody2D pl;
 
-    /*
-    public float moveSpeed = 3f; // Tốc độ di chuyển của enemy
-    public float changeDirectionTime = 2f; // Thời gian thay đổi hướng
-    Animator anim;
-    private Vector2 targetPosition;
-    private Rigidbody2D rb;
-    private bool isFacingRight = true; // Biến để xác định hướng
-
+    private Vector3 OriginPosition;
+    public float moveSpeed = 5f;
     
 
-    private void Update()
-    {
-        MoveTowardsTarget(); // Di chuyển enemy về phía vị trí mục tiêu
-        FlipIfNeeded(); // Kiểm tra và lật enemy nếu cần
+    private Transform currentTarget;
 
-        // Kiểm tra nếu enemy đang di chuyển và đặt biến isRunning trong Animator
-        bool isMoving = rb.velocity.magnitude > 0.1f;
-        anim.SetBool("Runing", isMoving); // "isRunning" là tên parameter trong Animator
-    }
+    private bool isGonnaAttack=false;
 
-    private void SetRandomTargetPosition()
-    {
-        // Tạo một vị trí ngẫu nhiên trong một phạm vi nhất định
-        targetPosition = new Vector2(Random.Range(-8f, 8f), Random.Range(-4f, 4f)); // Điều chỉnh phạm vi theo nhu cầu của bạn
-    }
+    public Transform Target1;
+    public Transform Target2;
+    public Transform Target3;
 
-    private void MoveTowardsTarget()
-    {
-        // Tính hướng và vận tốc
-        Vector2 direction = (targetPosition - rb.position).normalized; // Tính hướng từ enemy đến vị trí mục tiêu
-        rb.velocity = direction * moveSpeed; // Đặt vận tốc cho Rigidbody2D
-    }
-
-    private void FlipIfNeeded()
-    {
-        // Kiểm tra hướng di chuyển để quyết định có cần lật hình hay không
-        if ((rb.velocity.x > 0 && !isFacingRight) || (rb.velocity.x < 0 && isFacingRight))
-        {
-            isFacingRight = !isFacingRight;
-            Vector3 scale = transform.localScale;
-            scale.x *= -1; // Lật theo trục x
-            transform.localScale = scale;
-        }
-    }
-    */
     private void Start()
     {
+        GameObject Target1oj = GameObject.Find("Target1");
+        if(Target1oj != null)
+        {
+            Transform Target1 = Target1oj.GetComponent<Transform>();
+        }
+        GameObject Target2oj = GameObject.Find("Target2");
+        if (Target1oj != null)
+        {
+            Transform Target2 = Target2oj.GetComponent<Transform>();
+        }
+        GameObject Target3oj = GameObject.Find("Target3");
+        if (Target1oj != null)
+        {
+            Transform Target3 = Target3oj.GetComponent<Transform>();
+        }
+
+        OriginPosition = transform.position;
+        currentTarget = Target1;
+
         rb = GetComponent<Rigidbody2D>();
         Golbin = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
@@ -75,28 +61,61 @@ public class Enemy : MonoBehaviour
         if (attackHitboxoj != null)
         {
             AttackHitBox = attackHitboxoj.GetComponent<Rigidbody2D>();
+        }    
+    }
+
+
+
+    public void ChasePlayer()
+    {
+        if (isGonnaAttack == false) 
+        {
+            if ((currentTarget.position.x > transform.position.x && !isFacingRight) ||
+            (currentTarget.position.x < transform.position.x && isFacingRight))
+            {
+                Flip();
+            }
+
+
+            rb.position = Vector2.MoveTowards(rb.position, currentTarget.position, moveSpeed * Time.deltaTime);
+            anim.SetBool("Runing", true);
+
+            if (Vector2.Distance(rb.position, currentTarget.position) < 0.1f)
+            {
+                if (currentTarget == Target1)
+                {
+                    currentTarget = Target2;
+                }
+                else if (currentTarget == Target2)
+                {
+                    currentTarget = Target3;
+                }
+                else if (currentTarget == Target3)
+                {
+                    currentTarget = Target1; 
+                }
+                
+            }
+
         }
 
-        GameObject PlayerP = GameObject.FindWithTag("Player");
-        pl = PlayerP.GetComponent<Rigidbody2D>();
     }
+
     public void Update()
     {
         if (IsPlayerInRange())
         {
             Attack();
+            isGonnaAttack = true;
         }
         else 
         {
             OnAttackComplete();
-        }
-
-        if (pl == null) 
-        {
-            Debug.Log("DUng");
+            isGonnaAttack = false;
         }
 
         FacePlayer();
+        ChasePlayer();
     }
     public void FacePlayer()
     {
@@ -144,6 +163,7 @@ public class Enemy : MonoBehaviour
     public void OnAttackComplete()
     {   
         anim.SetBool("isattack", false);
+        deactiveHitBox();
     }
     public void activeHitBox()
     {

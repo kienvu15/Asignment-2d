@@ -16,24 +16,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject AttackYHitBox;
     [SerializeField] GameObject MinusAttackYHitBox;
     [SerializeField] GameObject Pivot;
-    
 
-    [SerializeField] public float moveSpeed = 5f;
+    [SerializeField] public CharacterData characterData;
+    [SerializeField] public ArrowData arrowData;
     private float OriginalmoveSpeed;
     private float movementX, movementY;
     private bool isFacingRight = true;
     
-    
-
-    [SerializeField] public float dashForce = 10f;
-    [SerializeField] public float dashSpeed = 8f;
-
     [SerializeField] GameObject Arrow;
-    [SerializeField] private float arrowSpeed = 10f;
 
     [SerializeField] public float maxHealth = 3f;
-    [SerializeField] private HealthDisplay healthDisplay;
 
+    [SerializeField] private HealthDisplay healthDisplay;
+    public MusicManager musicManager;
     void Start()
     {
         Player = GetComponent<Rigidbody2D>();
@@ -45,7 +40,8 @@ public class PlayerController : MonoBehaviour
             BrigdetilemapRenderer = Bridge.GetComponent<TilemapRenderer>();
         }
 
-        OriginalmoveSpeed = moveSpeed;
+        OriginalmoveSpeed = characterData.moveSpeed;
+        musicManager = FindObjectOfType<MusicManager>();
     }
 
     void Update()
@@ -75,7 +71,7 @@ public class PlayerController : MonoBehaviour
             movementY = Input.GetAxisRaw("Vertical");
             Vector2 moment = new Vector2(movementX, movementY).normalized;
 
-            Player.velocity = moment * moveSpeed;
+            Player.velocity = moment * characterData.moveSpeed;
             anim.SetBool("Run", movementX != 0 || movementY != 0);   
     }
 
@@ -95,7 +91,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             Vector2 moment = new Vector2(movementX, movementY).normalized;
-            Player.velocity = moment * dashForce * dashSpeed;
+            Player.velocity = moment * characterData.dashForce * characterData.dashSpeed;
         }
     }
 
@@ -106,17 +102,17 @@ public class PlayerController : MonoBehaviour
             if (movementY > 0) 
             {
                 anim.SetTrigger("yattack");
-                moveSpeed = 0;
+                characterData.moveSpeed = 0;
             }
             else if (movementY < 0) 
             {
                 anim.SetTrigger("minusYattack");
-                moveSpeed = 0;
+                characterData.moveSpeed = 0;
             }
             else 
             {
                 anim.SetTrigger("attack");
-                moveSpeed = 0;
+                characterData.moveSpeed = 0;
             }
 
             anim.SetBool("isAttacking", true);
@@ -130,7 +126,7 @@ public class PlayerController : MonoBehaviour
         anim.ResetTrigger("yattack");
         anim.ResetTrigger("minusYattack");
         anim.SetBool("isAttacking", false);
-        moveSpeed = OriginalmoveSpeed;
+        characterData.moveSpeed = OriginalmoveSpeed;
         DisActiveHitbox();
     }
 
@@ -162,11 +158,11 @@ public class PlayerController : MonoBehaviour
 
             if (isFacingRight)
             {
-                arrow.velocity = new Vector2(arrowSpeed, 0);
+                arrow.velocity = new Vector2(arrowData.arrowSpeed, 0);
             }
             else
             {
-                arrow.velocity = new Vector2(-arrowSpeed, 0);
+                arrow.velocity = new Vector2(-arrowData.arrowSpeed, 0);
                 Vector3 Scale = arrow.transform.localScale;
                 Scale.x *= -1;
                 arrow.transform.localScale = Scale;
@@ -178,14 +174,14 @@ public class PlayerController : MonoBehaviour
         {
             GameObject shot = Instantiate(Arrow, Pivot.transform.position, Quaternion.Euler(0, 0, 90));
             Rigidbody2D arrow = shot.GetComponent<Rigidbody2D>();
-            arrow.velocity = new Vector2(0, arrowSpeed);
+            arrow.velocity = new Vector2(0, arrowData.arrowSpeed);
             Destroy(shot, 2f);
         }
         else if (Input.GetKeyDown(KeyCode.C) && (movementY < 0))
         {
             GameObject shot = Instantiate(Arrow, Pivot.transform.position, Quaternion.Euler(0, 0, -90));
             Rigidbody2D arrow = shot.GetComponent<Rigidbody2D>();
-            arrow.velocity = new Vector2(0, -arrowSpeed);
+            arrow.velocity = new Vector2(0, -arrowData.arrowSpeed);
             Destroy(shot, 2f);
         }
 
@@ -227,8 +223,38 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Gbattackhitbox"))
         {
             maxHealth--;
-            healthDisplay.UpdateHearts(maxHealth);
-            
+            healthDisplay.UpdateHearts(maxHealth); 
+        }
+        if (collision.CompareTag("AttackRange"))
+        {
+            // Phát nhạc chiến đấu khi va chạm với quái
+            musicManager.StartBattleMusic();
+        }
+
+
+    }
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            // Phát nhạc chiến đấu khi va chạm với quái
+            musicManager.StartBattleMusic();
+        }
+    }
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            // Tắt nhạc chiến đấu khi rời khỏi quái
+            musicManager.StopBattleMusic();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("AttackRange"))
+        {
+            musicManager.StopBattleMusic();
         }
     }
 

@@ -5,8 +5,10 @@ using System.Collections.Generic;
 public class HealthDisplay : MonoBehaviour
 {
     [SerializeField] private GameObject heartPrefab;
-    [SerializeField] private PlayerController player; 
+    [SerializeField] private PlayerController player;
+    
     private List<GameObject> hearts = new List<GameObject>();
+    
 
     void Start()
     {
