@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject Pivot;
 
     [SerializeField] public CharacterData characterData;
+    public float moveSpeed = 5f;
     [SerializeField] public ArrowData arrowData;
     private float OriginalmoveSpeed;
     private float movementX, movementY;
@@ -26,9 +27,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject Arrow;
 
     [SerializeField] public float maxHealth = 3f;
-
     [SerializeField] private HealthDisplay healthDisplay;
     public MusicManager musicManager;
+
     void Start()
     {
         Player = GetComponent<Rigidbody2D>();
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
 
         OriginalmoveSpeed = characterData.moveSpeed;
         musicManager = FindObjectOfType<MusicManager>();
+
     }
 
     void Update()
@@ -51,7 +53,7 @@ public class PlayerController : MonoBehaviour
         Attack();
         Dash();
         Shot();
-        Shot2();
+        
 
         if (maxHealth <= 0)
         {
@@ -71,7 +73,7 @@ public class PlayerController : MonoBehaviour
             movementY = Input.GetAxisRaw("Vertical");
             Vector2 moment = new Vector2(movementX, movementY).normalized;
 
-            Player.velocity = moment * characterData.moveSpeed;
+            Player.velocity = moment * moveSpeed;
             anim.SetBool("Run", movementX != 0 || movementY != 0);   
     }
 
@@ -153,45 +155,72 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C) && movementX !=0)
         {
+            StartCoroutine(ContinuousShooting());
+        }
+
+        if (Input.GetKeyDown(KeyCode.C) && (movementY > 0))
+        {
+            StartCoroutine(ContinuousShooting2());
+        }
+
+        else if (Input.GetKeyDown(KeyCode.C) && (movementY < 0))
+        {
+            StartCoroutine(ContinuousShooting3());
+        }
+        
+
+    }
+
+    public IEnumerator ContinuousShooting()
+    {
+        for(int i = 1; i < 5; i++)
+        {
             GameObject shot = Instantiate(Arrow, AttackHitBox.transform.position, Quaternion.identity);
             Rigidbody2D arrow = shot.GetComponent<Rigidbody2D>();
-
             if (isFacingRight)
             {
-                arrow.velocity = new Vector2(arrowData.arrowSpeed, 0);
+                arrow.velocity = new Vector2(arrowData.arrowSpeed, 0);            
             }
             else
             {
                 arrow.velocity = new Vector2(-arrowData.arrowSpeed, 0);
                 Vector3 Scale = arrow.transform.localScale;
                 Scale.x *= -1;
-                arrow.transform.localScale = Scale;
+                arrow.transform.localScale = Scale; 
             }
             Destroy(shot, 2f);
-            
+            yield return new WaitForSeconds(0.5f);
         }
-        if (Input.GetKeyDown(KeyCode.C) && (movementY > 0))
+    }
+
+    public IEnumerator ContinuousShooting2()
+    {
+        for (int i = 1; i < 5; i++)
         {
             GameObject shot = Instantiate(Arrow, Pivot.transform.position, Quaternion.Euler(0, 0, 90));
             Rigidbody2D arrow = shot.GetComponent<Rigidbody2D>();
             arrow.velocity = new Vector2(0, arrowData.arrowSpeed);
             Destroy(shot, 2f);
+
+            
+            yield return new WaitForSeconds(0.5f);
         }
-        else if (Input.GetKeyDown(KeyCode.C) && (movementY < 0))
+    }
+
+    public IEnumerator ContinuousShooting3()
+    {
+        for (int i = 1; i < 5; i++)
         {
-            GameObject shot = Instantiate(Arrow, Pivot.transform.position, Quaternion.Euler(0, 0, -90));
+            GameObject shot = Instantiate(Arrow, Pivot.transform.position, Quaternion.Euler(0, 0, 90));
             Rigidbody2D arrow = shot.GetComponent<Rigidbody2D>();
             arrow.velocity = new Vector2(0, -arrowData.arrowSpeed);
             Destroy(shot, 2f);
+
+
+            yield return new WaitForSeconds(0.5f);
         }
-
-
     }
 
-    public void Shot2()
-    {
-        
-    }
 
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -5,6 +5,8 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Enemy : MonoBehaviour
 {
+
+    [SerializeField] public RangeSS rangeSS;
     Rigidbody2D rb;
     Animator anim;
     BoxCollider2D Golbin;
@@ -28,8 +30,17 @@ public class Enemy : MonoBehaviour
     public Transform Target2;
     public Transform Target3;
 
+    public Rigidbody2D RangeSS;
+
     private void Start()
     {
+
+        GameObject Rangesse = GameObject.FindWithTag("RangeSS");
+        if(Rangesse != null)
+        {
+            RangeSS = Rangesse.GetComponent<Rigidbody2D>();
+        }
+
         GameObject Target1oj = GameObject.Find("Target1");
         if(Target1oj != null)
         {
@@ -64,9 +75,46 @@ public class Enemy : MonoBehaviour
         }    
     }
 
+    public void Update()
+    {
+        if (IsPlayerInRange())
+        {
+            Attack();
+            isGonnaAttack = true;
+        }
+        else
+        {
+            OnAttackComplete();
+            isGonnaAttack = false;
+        }
 
+        FacePlayer();
+        Movee();
+        ChasePlayer();
+    }
 
     public void ChasePlayer()
+    {
+        if (isGonnaAttack == false) 
+    { 
+        if (rangeSS.isChase)
+        {
+            if (Player.position.x > transform.position.x && !isFacingRight)
+            {
+                Flip();
+            }
+            else if (Player.position.x < transform.position.x && isFacingRight)
+            {
+                Flip();
+            }
+
+            rb.position = Vector2.MoveTowards(rb.position, Player.position, moveSpeed * 1.5f * Time.deltaTime);
+            anim.SetBool("Runing", true);
+        }
+    }
+    }
+    
+    public void Movee()
     {
         if (isGonnaAttack == false) 
         {
@@ -101,22 +149,7 @@ public class Enemy : MonoBehaviour
 
     }
 
-    public void Update()
-    {
-        if (IsPlayerInRange())
-        {
-            Attack();
-            isGonnaAttack = true;
-        }
-        else 
-        {
-            OnAttackComplete();
-            isGonnaAttack = false;
-        }
-
-        FacePlayer();
-        ChasePlayer();
-    }
+    
     public void FacePlayer()
     {
         if (Player == null) return;
