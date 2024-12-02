@@ -36,8 +36,6 @@ public class TNTGoblin : MonoBehaviour
         healthSlider.maxValue = maxHealth;
         healthSlider.value = currentHealth;
 
-        
-
         InvokeRepeating(nameof(Shot), 0f, 3f);
     }
 
@@ -45,23 +43,27 @@ public class TNTGoblin : MonoBehaviour
     void Update()
     {
         Flip();
-        
+        StartShoting();
+    }
+
+    public void StartShoting()
+    {
+        if (RangeDY.CanShot)
+        {
+            anim.SetTrigger("canShot");
+        }
     }
     public void Shot()
     {
         if (RangeDY.CanShot)
         {
-            
             Vector2 targetPosition = Player.position;
-
-            
             GameObject dynamineoj = Instantiate(Dynamine, pivot.position, Quaternion.identity);
-
-            
             Bullet bullet = dynamineoj.GetComponent<Bullet>();
             bullet.SetTarget(targetPosition);
         }
     }
+
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -75,14 +77,23 @@ public class TNTGoblin : MonoBehaviour
                 Die();
             }
         }
-        
+        if (collision.CompareTag("Arrow"))
+        {
+            currentHealth--;
+            healthSlider.value = currentHealth;
+            if (currentHealth <= 0)
+            {
+                Die();
+
+            }
+        }
+
     }
 
     private void Die()
     {
         Destroy(gameObject);
     }
-
 
     public void Flip()
     {
@@ -100,4 +111,5 @@ public class TNTGoblin : MonoBehaviour
             rb.transform.localScale = scale;
         }
     }
+
 }

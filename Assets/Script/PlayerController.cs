@@ -24,11 +24,14 @@ public class PlayerController : MonoBehaviour
     private float movementX, movementY;
     private bool isFacingRight = true;
     
+    
     [SerializeField] GameObject Arrow;
 
     [SerializeField] public float maxHealth = 3f;
     [SerializeField] private HealthDisplay healthDisplay;
+
     public MusicManager musicManager;
+    public ScoreManager scoreManager;
 
     void Start()
     {
@@ -41,18 +44,22 @@ public class PlayerController : MonoBehaviour
             BrigdetilemapRenderer = Bridge.GetComponent<TilemapRenderer>();
         }
 
-        OriginalmoveSpeed = characterData.moveSpeed;
+        OriginalmoveSpeed = moveSpeed;
         musicManager = FindObjectOfType<MusicManager>();
-
+        scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     void Update()
     {
-        Move();
+        
+            Move();
+        
+        
         Flip();
         Attack();
         Dash();
         Shot();
+        Shot2();
         
 
         if (maxHealth <= 0)
@@ -69,11 +76,12 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
+
             movementX = Input.GetAxisRaw("Horizontal");
             movementY = Input.GetAxisRaw("Vertical");
             Vector2 moment = new Vector2(movementX, movementY).normalized;
 
-            Player.velocity = moment * moveSpeed;
+            Player.velocity = moment * characterData.moveSpeed;
             anim.SetBool("Run", movementX != 0 || movementY != 0);   
     }
 
@@ -167,8 +175,33 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(ContinuousShooting3());
         }
-        
+    }
 
+    public void Shot2()
+    {
+        
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            moveSpeed = 0;
+            GameObject shot = Instantiate(Arrow, Pivot.transform.position, Quaternion.identity);
+            Rigidbody2D arrow = shot.GetComponent<Rigidbody2D>();
+            if (isFacingRight)
+            {
+                arrow.velocity = new Vector2(arrowData.arrowSpeed, 0);
+            }
+            else
+            {
+                arrow.velocity = new Vector2(-arrowData.arrowSpeed, 0);
+                Vector3 Scale = arrow.transform.localScale;
+                Scale.x *= -1;
+                arrow.transform.localScale = Scale;
+            }
+            Destroy(shot, 2f);
+        }
+        else
+        {
+            moveSpeed = OriginalmoveSpeed;
+        }
     }
 
     public IEnumerator ContinuousShooting()
@@ -245,6 +278,7 @@ public class PlayerController : MonoBehaviour
 
         if(collision.CompareTag("Item"))
         {
+            scoreManager.AddScore(1);
             Destroy(collision.gameObject);
             maxHealth++;
             healthDisplay.UpdateHearts(maxHealth);
@@ -253,6 +287,11 @@ public class PlayerController : MonoBehaviour
         {
             maxHealth--;
             healthDisplay.UpdateHearts(maxHealth); 
+        }
+        if (collision.CompareTag("Dynamite"))
+        {
+            maxHealth--;
+            healthDisplay.UpdateHearts(maxHealth);
         }
         if (collision.CompareTag("AttackRange"))
         {

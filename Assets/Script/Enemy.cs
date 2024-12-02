@@ -2,18 +2,22 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-
+    [SerializeField] private Slider healthSlider;
     [SerializeField] public RangeSS rangeSS;
     Rigidbody2D rb;
     Animator anim;
     BoxCollider2D Golbin;
-    private int hitCount = 0;
-    private int maxHits = 3;
+
+    private float maxHealth = 3f;
+    private float currentHealth;
+
     [SerializeField] Rigidbody2D AttackRange;
     [SerializeField] Rigidbody2D AttackHitBox;
+
     private bool isFacingRight = true;
     
     public Transform Player;
@@ -34,6 +38,9 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        currentHealth = maxHealth;
+        healthSlider.maxValue = maxHealth;
+        healthSlider.value = currentHealth;
 
         GameObject Rangesse = GameObject.FindWithTag("RangeSS");
         if(Rangesse != null)
@@ -63,16 +70,9 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         Golbin = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
-        GameObject attackener = GameObject.FindWithTag("AttackRange");
-        if (attackener != null)
-        {
-            AttackRange = attackener.GetComponent<Rigidbody2D>();
-        }
-        GameObject attackHitboxoj = GameObject.FindWithTag("Gbattackhitbox");
-        if (attackHitboxoj != null)
-        {
-            AttackHitBox = attackHitboxoj.GetComponent<Rigidbody2D>();
-        }    
+
+        AttackRange = transform.Find("AttackRange").GetComponent<Rigidbody2D>();
+        AttackHitBox = transform.Find("AttackHitBox").GetComponent<Rigidbody2D>();
     }
 
     public void Update()
@@ -173,17 +173,36 @@ public class Enemy : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("AttackPosition"))
+        if (collision.CompareTag("AttackPosition") && collision.gameObject == Player.gameObject)
         {
-            hitCount++;
+            currentHealth--;
+            healthSlider.value = currentHealth;
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+        }
 
-            if (hitCount >= maxHits)
+        if (collision.CompareTag("Arrow"))
+        {
+            currentHealth--;
+            healthSlider.value = currentHealth;
+            if (currentHealth <= 0)
             {
                 anim.SetTrigger("Dead");
                 Golbin.enabled = false;
+                moveSpeed = 0f;
             }
         }
     }
+
+    private void Die()
+    {
+        anim.SetTrigger("Dead");
+        Golbin.enabled = false;
+        moveSpeed = 0f;
+    }
+
     private bool IsPlayerInRange()
     {
         return AttackRange.OverlapPoint(Player.transform.position);

@@ -5,14 +5,17 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     Animator anim;
+    CircleCollider2D circleCollider;
     private Vector2 targetPosition; 
     public float moveSpeed = 5f;    
+
 
     private bool startEx = false;
     private Coroutine explosion;
     private void Start()
     {
         anim = GetComponent<Animator>();
+        circleCollider = GetComponent<CircleCollider2D>();
     }
     public void SetTarget(Vector2 target)
     {
@@ -21,11 +24,11 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
+        circleCollider.enabled = false;
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
         if (Vector2.Distance(transform.position,targetPosition) < 0.1f)
         {
             StopAtTarget();
-            
         }
     }
 
@@ -59,6 +62,10 @@ public class Bullet : MonoBehaviour
         }
     }
 
+    public void ActiveBoomRangeDame()
+    {
+        circleCollider.enabled = true;
+    }
     public void On0Destroy()
     {
         Destroy(gameObject);

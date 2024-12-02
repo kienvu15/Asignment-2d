@@ -18,6 +18,8 @@ TagManager:
   - Gbattackhitbox
   - Explosion
   - RangeSS
+  - Dynamite
+  - Arrow
   layers:
   - Default
   - TransparentFX
