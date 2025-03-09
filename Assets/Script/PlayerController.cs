@@ -4,10 +4,11 @@ using Unity.VisualScripting;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-
+    Enemy enemy;
     Rigidbody2D Player;
     BoxCollider2D Pl;
     Animator anim;
@@ -16,25 +17,35 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject AttackYHitBox;
     [SerializeField] GameObject MinusAttackYHitBox;
     [SerializeField] GameObject Pivot;
+    [SerializeField] GameObject Copy;
 
     [SerializeField] public CharacterData characterData;
     public float moveSpeed = 5f;
     [SerializeField] public ArrowData arrowData;
     private float OriginalmoveSpeed;
+    private Coroutine gobackmovespeed;
     private float movementX, movementY;
     private bool isFacingRight = true;
     
     
     [SerializeField] GameObject Arrow;
+    [SerializeField] GameObject Player23;
+    
 
     [SerializeField] public float maxHealth = 3f;
-    [SerializeField] private HealthDisplay healthDisplay;
+    /*[SerializeField] private HealthDisplay healthDisplay;*/
+    [SerializeField] private Slider healthSlider;
+    private float currentHealth;
 
     public MusicManager musicManager;
     public ScoreManager scoreManager;
-
+    private bool isScale= false;
     void Start()
     {
+        currentHealth = maxHealth;
+        healthSlider.maxValue = maxHealth;
+        healthSlider.value = currentHealth;
+
         Player = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         Pl = GetComponent<BoxCollider2D>();
@@ -51,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        
+        Cpopu();
             Move();
         
         
@@ -62,18 +73,44 @@ public class PlayerController : MonoBehaviour
         Shot2();
         
 
-        if (maxHealth <= 0)
+        if (currentHealth <= 0)
         {
             anim.Play("Die");
             Pl.enabled = false;
         }
+
+        Scale();
+        
+
     }
 
     void FixedUpdate()
     {
         
     }
+    public void Scale()
+    {
+        if (Input.GetKeyDown(KeyCode.Z) && isScale == false)
+        {
 
+            Vector3 Scalepl = Player.transform.localScale;
+            Scalepl = new Vector3(2, 2, 2);
+            Player.transform.localScale = Scalepl;
+            isScale = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Z) && isScale == true)
+        {
+            Vector3 Scalepl = Player.transform.localScale;
+            Scalepl = new Vector3(1, 1, 1);
+            Player.transform.localScale = Scalepl;
+            isScale = false;
+        }
+
+    }
+    public void Scale2()
+    {
+        
+    }
     public void Move()
     {
 
@@ -81,7 +118,7 @@ public class PlayerController : MonoBehaviour
             movementY = Input.GetAxisRaw("Vertical");
             Vector2 moment = new Vector2(movementX, movementY).normalized;
 
-            Player.velocity = moment * characterData.moveSpeed;
+            Player.velocity = moment * moveSpeed;
             anim.SetBool("Run", movementX != 0 || movementY != 0);   
     }
 
@@ -177,12 +214,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    
     public void Shot2()
     {
         
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            moveSpeed = 0;
+            
             GameObject shot = Instantiate(Arrow, Pivot.transform.position, Quaternion.identity);
             Rigidbody2D arrow = shot.GetComponent<Rigidbody2D>();
             if (isFacingRight)
@@ -198,10 +236,7 @@ public class PlayerController : MonoBehaviour
             }
             Destroy(shot, 2f);
         }
-        else
-        {
-            moveSpeed = OriginalmoveSpeed;
-        }
+        
     }
 
     public IEnumerator ContinuousShooting()
@@ -255,7 +290,14 @@ public class PlayerController : MonoBehaviour
     }
 
 
-
+    public void Cpopu()
+    {
+        if (Input.GetKeyDown(KeyCode.RightShift))
+        {
+            GameObject Player2 = Instantiate(Player23, Copy.transform.position, Quaternion.identity);
+            
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Floor2Trigger"))
@@ -280,26 +322,37 @@ public class PlayerController : MonoBehaviour
         {
             scoreManager.AddScore(1);
             Destroy(collision.gameObject);
-            maxHealth++;
-            healthDisplay.UpdateHearts(maxHealth);
+            /*maxHealth++;
+            healthDisplay.UpdateHearts(maxHealth);*/
+
+            moveSpeed = moveSpeed * 3;
+            gobackmovespeed = StartCoroutine(OriginalMoveSpeed());
         }
         if (collision.CompareTag("Gbattackhitbox"))
         {
-            maxHealth--;
-            healthDisplay.UpdateHearts(maxHealth); 
+            
+            currentHealth--;
+            healthSlider.value = currentHealth;
+            /*healthDisplay.UpdateHearts(maxHealth); */
         }
         if (collision.CompareTag("Dynamite"))
         {
-            maxHealth--;
-            healthDisplay.UpdateHearts(maxHealth);
+            
+            currentHealth--;
+            healthSlider.value = currentHealth;
+            /*healthDisplay.UpdateHearts(maxHealth);*/
         }
         if (collision.CompareTag("AttackRange"))
         {
             // Phát nhạc chiến đấu khi va chạm với quái
             musicManager.StartBattleMusic();
         }
+    }
 
-
+    public IEnumerator OriginalMoveSpeed()
+    {
+        yield return new WaitForSeconds(3);
+        moveSpeed = OriginalmoveSpeed;
     }
     void OnCollisionEnter2D(Collision2D collision)
     {

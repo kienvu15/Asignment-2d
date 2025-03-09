@@ -5,6 +5,8 @@ using UnityEngine;
 public class Arrow : MonoBehaviour
 {
     Rigidbody2D Rigidbody;
+    public Transform Arrowposition;
+    public GameObject Explosion;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +23,8 @@ public class Arrow : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            GameObject Explo = Instantiate(Explosion, Rigidbody.transform.position, Quaternion.identity);
+            Destroy(Explo, 1f);
         }
     }
 }

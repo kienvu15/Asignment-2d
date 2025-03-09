@@ -7,13 +7,14 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private Slider healthSlider;
+    private float maxHealth = 3f;
+    private float currentHealth;
     [SerializeField] public RangeSS rangeSS;
     Rigidbody2D rb;
     Animator anim;
     BoxCollider2D Golbin;
-
-    private float maxHealth = 3f;
-    private float currentHealth;
+    public float EneemyCount = 0;
+    
 
     [SerializeField] Rigidbody2D AttackRange;
     [SerializeField] Rigidbody2D AttackHitBox;
@@ -173,13 +174,14 @@ public class Enemy : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("AttackPosition") && collision.gameObject == Player.gameObject)
+        if (collision.CompareTag("AttackPosition"))
         {
             currentHealth--;
             healthSlider.value = currentHealth;
             if (currentHealth <= 0)
             {
                 Die();
+                EneemyCount++;
             }
         }
 
@@ -192,6 +194,7 @@ public class Enemy : MonoBehaviour
                 anim.SetTrigger("Dead");
                 Golbin.enabled = false;
                 moveSpeed = 0f;
+                EneemyCount++;
             }
         }
     }

@@ -1,0 +1,466 @@
+fileFormatVersion: 2
+guid: bf95209f554ef2a4dba998c2661b746f
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 30
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 252.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4946f879825f1f7468d4042e3f9c82f3
+      internalID: -1358823167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_1
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 252.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 401c9375e02f8af40b1a7bd85cd0c52f
+      internalID: -17273697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_2
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 252.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cc3041f03f042d43afbcb2a00a245bc
+      internalID: -944186852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_3
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 252.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6d15161707473442941e43d949f9e2c
+      internalID: 1518394075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_4
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 252.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e5b1b42f91b4f540a0842af339491b4
+      internalID: 506658059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_5
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 252.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a92fa233dfe7a9441aa7bf3be01c34f8
+      internalID: 578151252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_6
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 252.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3912084fdd3249445b2bb2a0865cc6a7
+      internalID: 1613957443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_7
+      rect:
+        serializedVersion: 2
+        x: 1680
+        y: 252.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 118bdca5cd199ec4abf66aca5760cec1
+      internalID: -784974402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c99a58b8a71adc74bbb52da86c16fada
+      internalID: -1038815065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_9
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dddfdd70a6b83e146896cf9be20464b2
+      internalID: 1883610195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_10
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dac58d5310e162646ad716cc1bc6761f
+      internalID: -996386553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_11
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f81c1a330449ed4ebc47df261bb453f
+      internalID: 580686509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_12
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86ff29f4beb03584dab407a62ba058be
+      internalID: 1340150480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_13
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 0.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2ca14a9cde61464ea9b6f4e5a943784
+      internalID: -291301540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_14
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 0.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5454c878e8318e34ea60dfa6eaa72935
+      internalID: 156237223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: De 03 - hieu ung no_15
+      rect:
+        serializedVersion: 2
+        x: 1680
+        y: 0.5
+        width: 240
+        height: 252.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83a2b6a3280cf46498824d243237a8e9
+      internalID: -1180398596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      De 03 - hieu ung no_0: -1358823167
+      De 03 - hieu ung no_1: -17273697
+      De 03 - hieu ung no_10: -996386553
+      De 03 - hieu ung no_11: 580686509
+      De 03 - hieu ung no_12: 1340150480
+      De 03 - hieu ung no_13: -291301540
+      De 03 - hieu ung no_14: 156237223
+      De 03 - hieu ung no_15: -1180398596
+      De 03 - hieu ung no_2: -944186852
+      De 03 - hieu ung no_3: 1518394075
+      De 03 - hieu ung no_4: 506658059
+      De 03 - hieu ung no_5: 578151252
+      De 03 - hieu ung no_6: 1613957443
+      De 03 - hieu ung no_7: -784974402
+      De 03 - hieu ung no_8: -1038815065
+      De 03 - hieu ung no_9: 1883610195
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

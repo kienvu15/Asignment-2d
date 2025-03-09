@@ -2,6 +2,7 @@
 
 public class EnemyManager : MonoBehaviour
 {
+    
     [SerializeField] private GameObject winCanvas;
     [SerializeField] private GameObject loseCanvas;
     // Tham chiếu đến Canvas Win
@@ -24,10 +25,7 @@ public class EnemyManager : MonoBehaviour
     private void Update()
     {
         // Kiểm tra nếu không còn Enemy nào trong game
-        if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
-        {
-            ShowWinCanvas();
-        }
+        
 
         if (GameObject.FindGameObjectsWithTag("Player").Length == 0)
         {
